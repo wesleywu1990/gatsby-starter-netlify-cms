@@ -6,20 +6,20 @@ import PreviewCompatibleImage from './PreviewCompatibleImage'
 class BlogRoll extends React.Component {
   render() {
     const { data } = this.props
+    console.log("BlogRoll -> render -> this.props", this.props)
     const { edges: posts } = data.allMarkdownRemark
-
+    
+    console.log("BlogRoll -> render -> posts", posts)
     return (
       <div className="columns is-multiline">
         {posts &&
           posts.map(({ node: post }) => (
-            <div className="is-parent column is-6" key={post.id}>
+            <div className="is-parent column is-12" key={post.id}>
               <article
-                className={`blog-list-item tile is-child box notification ${
-                  post.frontmatter.featuredpost ? 'is-featured' : ''
-                }`}
+                className={`blog-list-item tile is-child box`}
               >
                 <header>
-                  {post.frontmatter.featuredimage ? (
+                  {/* {post.frontmatter.featuredimage ? (
                     <div className="featured-thumbnail">
                       <PreviewCompatibleImage
                         imageInfo={{
@@ -28,7 +28,7 @@ class BlogRoll extends React.Component {
                         }}
                       />
                     </div>
-                  ) : null}
+                  ) : null} */}
                   <p className="post-meta">
                     <Link
                       className="title has-text-primary is-size-4"
@@ -37,19 +37,40 @@ class BlogRoll extends React.Component {
                       {post.frontmatter.title}
                     </Link>
                     <span> &bull; </span>
-                    <span className="subtitle is-size-5 is-block">
-                      {post.frontmatter.date}
-                    </span>
                   </p>
                 </header>
-                <p>
+                <div className={"customContent"}>
+                  {post.frontmatter.featuredimage ? (
+                      <div className="customThumbnail">
+                        <PreviewCompatibleImage
+                          imageInfo={{
+                            image: post.frontmatter.featuredimage,
+                            alt: `featured image thumbnail for post ${post.frontmatter.title}`,
+                          }}
+                        />
+                      </div>
+                    ) : null}
+                  <div>
+                    {post.excerpt}
+                    <br />
+                    <br />
+                    <span className="is-block">
+                      {post.frontmatter.date}
+                    </span>
+                    {/* description */}
+                    <Link className="button" to={post.fields.slug}>
+                      Keep Reading →
+                    </Link>
+                  </div>
+                </div>
+                {/* <p>
                   {post.excerpt}
                   <br />
                   <br />
                   <Link className="button" to={post.fields.slug}>
                     Keep Reading →
                   </Link>
-                </p>
+                </p> */}
               </article>
             </div>
           ))}
