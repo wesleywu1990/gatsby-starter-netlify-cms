@@ -8,6 +8,7 @@ class BlogRoll extends React.Component {
     const { data } = this.props
     console.log("BlogRoll -> render -> this.props", this.props)
     const { edges: posts } = data.allMarkdownRemark
+    console.log("BlogRoll -> render -> posts", posts)
     
     console.log("BlogRoll -> render -> posts", posts)
     return (
@@ -51,7 +52,8 @@ class BlogRoll extends React.Component {
                       </div>
                     ) : null}
                   <div>
-                    {post.excerpt}
+                    {/* {post.excerpt} */}
+                    {post.frontmatter.description}
                     <br />
                     <br />
                     <span className="is-block">
@@ -105,6 +107,8 @@ export default () => (
               frontmatter {
                 title
                 templateKey
+                description
+                tags
                 date(formatString: "MMMM DD, YYYY")
                 featuredpost
                 featuredimage {
